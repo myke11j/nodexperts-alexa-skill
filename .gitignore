@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+deploy.env
+deploy.sh
+event.json
+env-variables.sh
+build/
+.lambda/

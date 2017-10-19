@@ -1,0 +1,10 @@
+# AWS creds
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_REGION=
+export AWS_DYNAMODB_TABLE_NAME=
+
+# Papertrail
+export PAPERTRAIL_PORT=
+export PAPERTRAIL_HOST=
+export PAPERTRAIL_MODULE=

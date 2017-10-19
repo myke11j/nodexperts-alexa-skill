@@ -1,0 +1,31 @@
+{
+  "name": "nodexperts-alexa-skill",
+  "version": "1.0.0",
+  "description": "An alexa skill for asking direct question to NodeXperts",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "dev:lambda": ". ./env-variables.sh && node-lambda run",
+    "dev:lambda-deploy": "bash deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myke11j/nodexperts-alexa-skill.git"
+  },
+  "keywords": [
+    "alexa",
+    "alexa-skill",
+    "nodexperts"
+  ],
+  "author": "Mukul <mukul1904@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/myke11j/nodexperts-alexa-skill/issues"
+  },
+  "homepage": "https://github.com/myke11j/nodexperts-alexa-skill#readme",
+  "dependencies": {
+    "aws-sdk": "^2.135.0",
+    "winston": "^2.4.0",
+    "winston-papertrail": "^1.0.5"
+  }
+}
