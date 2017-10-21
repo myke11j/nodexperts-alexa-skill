@@ -22,20 +22,7 @@ function getWelcomeResponse(callback) {
     callback(sessionAttributes,
         helpers.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
-
-function getHelpResponse(callback) {
-    const sessionAttributes = {};
-    const cardTitle = messages.titleMessage;
-    const speechOutput = messages.helpMessage;
-    // If the user either does not reply to the welcome message or says something that is not
-    // understood, they will be prompted again with this text.
-    const repromptText = messages.repromptMessage;
-    const shouldEndSession = false;
-
-    callback(sessionAttributes,
-        helpers.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
-}
-
+    
 function handleSessionEndRequest(callback) {
     const cardTitle = 'Session Ended';
     const speechOutput = messages.goodByeMessgae;
@@ -62,13 +49,13 @@ function getQueryByIntent(intent) {
  */
 function getDataViaIntent(intent, session, callback) {
     const query = getQueryByIntent(intent.name);
-    const cardTitle = intent.name;
-    alexaLogger.logInfo(`Intent ${cardTitle} received`);
     if (intent.name === 'AMAZON.HelpIntent') {
-        return getHelpResponse(callback);
+        intent.name = 'NX_DEMO_QUESTIONS'
     } else if (intent.name === 'AMAZON.StopIntent' || intent.name === 'AMAZON.CancelIntent') {
         return handleSessionEndRequest(callback);
     }
+    const cardTitle = intent.name;
+    alexaLogger.logInfo(`Intent ${cardTitle} received`);
     let repromptText = '';
     let sessionAttributes = {};
     const shouldEndSession = false;
