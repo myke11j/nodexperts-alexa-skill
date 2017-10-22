@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "dev:lambda": ". ./env-variables.sh && node-lambda run",
-    "dev:lambda-deploy": "bash deploy.sh"
+    "dev:lambda": "node-lambda run",
+    "dev:lambda-deploy": "node-lambda deploy"
   },
   "repository": {
     "type": "git",
