@@ -13,18 +13,19 @@ Which projects node experts have worked on?
 
 ## Set up
 
-There are two scripts in package.json, for
- - running lambda locally
- - deploying lambda to AWS
+- Install node-lambda package, `npm i -g node-lambda`
+- `npm i --production` in the working directory
+- Create `.env` and `deploy.env` files, follow format from `.env.sample` and `deploy.env.sample` files
+- Run `npm run dev:lambda`
 
-```
-    "dev:lambda": ". ./env-variables.sh && node-lambda run",
-    "dev:lambda-deploy": "bash deploy.sh"
-```
+#### For local testing
 
-As you can see, you will need either one of the above specified files.
-There is `env-variables.sh.example` file, follow it to create your own `env-variable.sh` file.
+- Create a `event.json` file from `event.json.example` and then run the lambda locally.
 
 ## Deploying
 
 For deploying, refer deploy guide on [node-lambda](https://www.npmjs.com/package/node-lambda)
+
+```
+npm run dev:lambda-deploy
+```
