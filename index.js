@@ -48,12 +48,12 @@ function getQueryByIntent(intent) {
  * Sets the color in the session and prepares the speech to reply to the user.
  */
 function getDataViaIntent(intent, session, callback) {
-    const query = getQueryByIntent(intent.name);
     if (intent.name === 'AMAZON.HelpIntent') {
         intent.name = 'NX_DEMO_QUESTIONS'
     } else if (intent.name === 'AMAZON.StopIntent' || intent.name === 'AMAZON.CancelIntent') {
         return handleSessionEndRequest(callback);
     }
+    const query = getQueryByIntent(intent.name);
     const cardTitle = intent.name;
     alexaLogger.logInfo(`Intent ${cardTitle} received`);
     let repromptText = '';
