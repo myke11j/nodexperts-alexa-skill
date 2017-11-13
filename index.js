@@ -12,7 +12,7 @@ const dynamodb = new AWS.DynamoDB();
 function getWelcomeResponse(callback) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     const sessionAttributes = {};
-    const cardTitle = messages.titleMessage;
+    const cardTitle = 'Welcome to NodeXperts!';
     const speechOutput = messages.greetingMessage;
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
@@ -24,7 +24,7 @@ function getWelcomeResponse(callback) {
 }
     
 function handleSessionEndRequest(callback) {
-    const cardTitle = 'Session Ended';
+    const cardTitle = 'NodeXperts Skill Exited';
     const speechOutput = messages.goodByeMessgae;
     // Setting this to true ends the session and exits the skill.
     const shouldEndSession = true;
@@ -48,24 +48,27 @@ function getQueryByIntent(intent) {
  * Sets the color in the session and prepares the speech to reply to the user.
  */
 function getDataViaIntent(intent, session, callback) {
-    if (intent.name === 'AMAZON.HelpIntent') {
-        intent.name = 'NX_DEMO_QUESTIONS'
+    const sessionAttributes = {};
+    let shouldEndSession = true;
+    let repromptText = null;
+    if (intent.name === 'AMAZON.HelpIntent' || intent.name === 'NX_DEMO_QUESTIONS') {
+        intent.name = 'NX_DEMO_QUESTIONS';
+        shouldEndSession = false;
+        repromptText = messages.repromptMessage;
     } else if (intent.name === 'AMAZON.StopIntent' || intent.name === 'AMAZON.CancelIntent') {
         return handleSessionEndRequest(callback);
     }
     const query = getQueryByIntent(intent.name);
-    const cardTitle = intent.name;
+    let cardTitle;
     alexaLogger.logInfo(`Intent ${cardTitle} received`);
-    let repromptText = '';
-    let sessionAttributes = {};
-    const shouldEndSession = false;
     dynamodb.getItem(query, (err, data) => {
         let speechOutput;
         if (err) {
             alexaLogger.logError(`Error in getting data from dynamodb: ${err}`);
-            speechOutput = 'We\'re sorry, there was some issue in getting response. Please try again.'
+            speechOutput = 'We\'re sorry, there was some issue in getting response. Please try again later.'
         } else {
             speechOutput = data.Item.answer['S'];
+            cardTitle = data.Item.cardTitle['S'];
             alexaLogger.logInfo(`Recieved data from table for sessionId=${session.sessionId}: ${speechOutput}`);
         }
         callback(sessionAttributes,
